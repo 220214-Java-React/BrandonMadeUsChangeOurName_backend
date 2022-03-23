@@ -1,0 +1,9 @@
+rootProject.name = 'project0_1'
+include 'com.chaslsbank.service'
+include 'com.revature.repoitory'
+include 'com'
+include 'Java'
+include 'ChaslsBanking'
+include 'src:untitled'
+findProject(':src:untitled')?.name = 'untitled'
+
