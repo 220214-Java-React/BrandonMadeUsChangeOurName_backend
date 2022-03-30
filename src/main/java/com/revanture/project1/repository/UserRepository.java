@@ -30,14 +30,18 @@ public class UserRepository implements DAO<User>{
 
         try {
             connection = ConnectionFactory.getConnection();
-            String sql = "insert into ers_users(username, password) values (?, ?)";
+            String sql = "insert into ers_users(username, email, password, given_name, surname, role_id) values (?, ?, ?, ?, ?, ?)";
 
 
             // once we have that link
             // we create a statement to be executed
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getGivenName());
+            stmt.setString(5, user.getSurname());
+            stmt.setString(6, user.getRoleId());
 
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -77,7 +81,11 @@ public class UserRepository implements DAO<User>{
                 user = new User(
                         resultSet.getInt("id"),
                         resultSet.getString("username"),
-                        resultSet.getString("password")
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("givenName"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("roleId")
                 );
             }
         } catch (Exception e) {
@@ -106,7 +114,12 @@ public class UserRepository implements DAO<User>{
                 user = new User(
                         rs.getInt("id"),
                         rs.getString("username"),
-                        rs.getString("password")
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("giveName"),
+                        rs.getString("surname"),
+                        rs.getString("roleId")
+
                 );
             }
         } catch (Exception e) {
@@ -129,9 +142,13 @@ public class UserRepository implements DAO<User>{
 
             while(resultSet.next()){
                 users.add(new User(
-                                resultSet.getInt("id"),
-                                resultSet.getString("username"),
-                                resultSet.getString("password")));
+                        resultSet.getInt("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("givenName"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("roleId")));
             }
         } catch (Exception e) {
             logger.warn(e);

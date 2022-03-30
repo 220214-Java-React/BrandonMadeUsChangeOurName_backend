@@ -125,6 +125,24 @@ public class UserService {
         return encryptPassword(password);
     }
 
+    private String getEmail(){
+        String email = "";
+        boolean valid = false;
+
+        while(!valid){
+            System.out.print("Password: ");
+            email = scanner.nextLine();
+
+            //TODO: Password validation
+            if(email.length() > 4){
+                valid = true;
+            } else{
+                System.out.println("Password must be longer than 4 characters.");
+            }
+        }
+        return email;
+    }
+
     private boolean exists(User user){
         // need to check if the username exists
         if (userRepository.getByUsername(user.getUsername()) == null){
