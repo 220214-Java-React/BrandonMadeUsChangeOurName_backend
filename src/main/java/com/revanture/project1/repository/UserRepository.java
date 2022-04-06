@@ -1,5 +1,6 @@
 package com.revanture.project1.repository;
 
+import com.revanture.project1.DAO.DAO;
 import com.revanture.project1.model.User;
 import com.revanture.project1.factories.ConnectionFactory;
 import org.apache.logging.log4j.LogManager;
@@ -10,15 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-    UserRepository is the starting point of our persistence layer.
-
-    CRUD Operations are those that allow the modification or persistence of data in some
-
-                                DML -> Data Manipulation Language
-    C - Create                  insert
-    R - Read                    select
-    U - Up.date                  update
-    D - De.lete                  delete
+ UserRepository is the starting point of our persistence layer.
+ CRUD Operations are those that allow the modification or persistence of data in some
+ DML -> Data Manipulation Language
+ C - Create                  insert
+ R - Read                    select
+ U - Up.date                  update
+ D - De.lete                  delete
  */
 public class UserRepository implements DAO<User>{
     private static final Logger logger = LogManager.getLogger(UserRepository.class);
@@ -28,32 +27,47 @@ public class UserRepository implements DAO<User>{
         // here we write our SQL to create a user
         Connection connection = null;
 
-        try {
-            connection = ConnectionFactory.getConnection();
-            String sql = "insert into ers_users(username, email, password, given_name, surname, role_id) values (?, ?, ?, ?, ?, ?)";
 
+        try{
+            connection = ConnectionFactory.getConnection();
+            String roleSql = "insert into ers_user_roles(role_id, role) values (?, ?)";
+            String sql = "insert into ers_users(user_id, username, email, password, given_name, surname, is_active, role_id1) values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement roleStmt = connection.prepareStatement(roleSql);
+//            if(user.getRoleId() == "e")
+//            {
+//                roleStmt.setString(1, user.getRoleId());
+//                roleStmt.setString(2, "employee");
+//                roleStmt.executeUpdate();
+//            }
+//             if(user.getRoleId() == "f")
+//            {
+//                roleStmt.setString(1, user.getRoleId());
+//                roleStmt.setString(2, "financial manager");
+//                roleStmt.executeUpdate();
+//            }
+//            else
+//            {
+//                roleStmt.setString(1, user.getRoleId());
+//                roleStmt.setString(2, "administrator");
+//                roleStmt.executeUpdate();
+//            }
 
             // once we have that link
             // we create a statement to be executed
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
+            stmt.setInt(1, user.getId());
+            stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getGivenName());
-            stmt.setString(5, user.getSurname());
-            stmt.setString(6, user.getRoleId());
-
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getGivenName());
+            stmt.setString(6, user.getSurname());
+            stmt.setBoolean(7, user.getActive());
+            stmt.setString(8, user.getRoleId());
             stmt.executeUpdate();
+
         } catch (Exception e) {
             logger.warn(e.getMessage(), e);
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -79,13 +93,13 @@ public class UserRepository implements DAO<User>{
 
             if(resultSet.next()){
                 user = new User(
-                        resultSet.getInt("id"),
+                        resultSet.getInt("user_id"),
                         resultSet.getString("username"),
                         resultSet.getString("email"),
                         resultSet.getString("password"),
-                        resultSet.getString("givenName"),
+                        resultSet.getString("given_name"),
                         resultSet.getString("surname"),
-                        resultSet.getString("roleId")
+                        resultSet.getString("role_id1")
                 );
             }
         } catch (Exception e) {
@@ -112,14 +126,13 @@ public class UserRepository implements DAO<User>{
 
             if(rs.next()){
                 user = new User(
-                        rs.getInt("id"),
+                        rs.getInt("user_id"),
                         rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("password"),
-                        rs.getString("giveName"),
+                        rs.getString("given_name"),
                         rs.getString("surname"),
-                        rs.getString("roleId")
-
+                        rs.getString("role_id")
                 );
             }
         } catch (Exception e) {
@@ -142,13 +155,13 @@ public class UserRepository implements DAO<User>{
 
             while(resultSet.next()){
                 users.add(new User(
-                        resultSet.getInt("id"),
+                        resultSet.getInt("user_id"),
                         resultSet.getString("username"),
                         resultSet.getString("email"),
                         resultSet.getString("password"),
-                        resultSet.getString("givenName"),
+                        resultSet.getString("given_name"),
                         resultSet.getString("surname"),
-                        resultSet.getString("roleId")));
+                        resultSet.getString("role_id")));
             }
         } catch (Exception e) {
             logger.warn(e);

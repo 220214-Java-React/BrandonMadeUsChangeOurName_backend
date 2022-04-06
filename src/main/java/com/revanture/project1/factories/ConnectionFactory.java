@@ -22,14 +22,12 @@ public class ConnectionFactory {
 
     // this method creates a single instance if needed otherwise, returns the existing one.
     public static Connection getConnection() throws SQLException {
-
-        if (instance == null || instance.isClosed()) {
-            // url, username, password ->
-//            Class.forName("org.postgresql.Driver"); <- this may be necessary to solve no suitable driver
-            instance = DriverManager.getConnection(url, username, password);
+        try{
+            Class.forName("org.postgresql.Driver");
+        }catch(Exception e){
+            e.printStackTrace();
         }
-
-        return instance;
+        return (instance == null) ? DriverManager.getConnection(url, username, password) : instance;
     }
 
     private ConnectionFactory() {
@@ -49,3 +47,12 @@ public class ConnectionFactory {
 
 
 }
+
+
+
+
+
+//            "jdbc:postgresql://javareact.cjurl0s0kcsf.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=p1";
+//
+//private static final String username = "postgres";
+//private static final String password = "12345678";

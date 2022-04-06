@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String givenName;
     private String surname;
     private String roleId;
+    private boolean active = false;
     
     public User(){
 
@@ -82,6 +83,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override
