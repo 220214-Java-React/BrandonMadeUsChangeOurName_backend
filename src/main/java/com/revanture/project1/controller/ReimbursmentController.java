@@ -1,6 +1,6 @@
 package com.revanture.project1.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.revanture.project1.model.ReimbursmentStatuses;
@@ -11,17 +11,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet("/reimbursment/*")
+@WebServlet("/reimbursment")
 public class ReimbursmentController extends HttpServlet{
 
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +46,8 @@ public class ReimbursmentController extends HttpServlet{
 
         } catch (Exception e) {
             logger.warn(e);
-            resp.setStatus(500);
+            resp.setStatus(300);
+
         }
     }
 

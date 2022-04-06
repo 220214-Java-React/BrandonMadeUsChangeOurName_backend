@@ -1,22 +1,25 @@
 package com.revanture.project1.model;
-import java.security.Timestamp;
+import java.io.Serializable;
 
-public class Reimbursment {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties
+public class Reimbursment implements Serializable{
 
 
     private int reimbId;
     private double amount;
-    private Timestamp submittedTime;
-    private Timestamp resolveTime;
+    private int submittedTime;
+    private int resolveTime;
     private String description;
     private byte receipt;
     private int paymentId;
     private String authorName;
     private String resolverName;
-    private int authorId; //creator of the reimbursment
+    private int author_ID; //creator of the reimbursment
     private int  resolveId; // the id of the person who reimburs
     private ReimbursmentStatuses statusId; // status of the reimbursements, pending, approved, denied
-    private ReimbursmentTypes typeId; // type of reimbursements food, travel, lodging, other
+    private ReimbursmentTypes type_id; // type of reimbursements food, travel, lodging, other
 
 
     public Reimbursment(){
@@ -25,14 +28,20 @@ public class Reimbursment {
 
     public Reimbursment( double amount, int authorId){
         this.amount = amount;
-        this.authorId = authorId;
+        this.author_ID = author_ID;
     }
 
-    public Reimbursment(int reimId, double amount, String description){
+    public Reimbursment(int reimId, double amount, int submittedTime, int resolveTime, String description, int paymentId, int author_ID, ReimbursmentStatuses statusId, ReimbursmentTypes type_id){
 
         this.reimbId = reimId;
         this.amount = amount;
+        this.submittedTime = submittedTime;
+        this.resolveTime = resolveTime;
         this.description = description;
+        this.paymentId = paymentId;
+        this.author_ID = author_ID;
+        this.type_id = type_id;
+        this.statusId = statusId;
 
 
     }
@@ -47,7 +56,7 @@ public class Reimbursment {
         this.authorName = authorName;
         this.resolverName = resolverName;
         this.statusId = statusId;
-        this.typeId = typeId;
+
     }
 
 
@@ -68,19 +77,19 @@ public class Reimbursment {
         this.amount = amount;
     }
 // subTime getter and setter
-    public Timestamp getSubmittedTime() {
+    public int getSubmittedTime() {
         return submittedTime;
     }
 
-    public void setSubmittedTime(Timestamp submittedTime) {
+    public void setSubmittedTime(int submittedTime) {
         this.submittedTime = submittedTime;
     }
 // resTime getter and setter
-    public Timestamp getResolveTime() {
+    public int getResolveTime() {
         return resolveTime;
     }
 
-    public void setResolveTime(Timestamp resolveTime) {
+    public void setResolveTime(int resolveTime) {
         this.resolveTime = resolveTime;
     }
 // description getter and setter
@@ -109,11 +118,11 @@ public class Reimbursment {
     }
 //author Id getter and setter
     public int getAuthorId() {
-        return authorId;
+        return author_ID;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthorId(int author_ID) {
+        this.author_ID = author_ID;
     }
 //ResolveId getter and setter
     public int getResolveId() {
@@ -133,11 +142,11 @@ public class Reimbursment {
     }
 //TypeID getter and setter
     public ReimbursmentTypes getTypeId() {
-        return typeId;
+        return type_id;
     }
 
-    public void setTypeId(ReimbursmentTypes typeId) {
-        this.typeId = typeId;
+    public void setTypeId(ReimbursmentTypes type_id) {
+        this.type_id = type_id;
     }
 
     public String getAuthorName() {
