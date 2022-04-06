@@ -1,12 +1,13 @@
 package com.revanture.project1.model;
+import java.security.Timestamp;
 
 public class Reimbursment {
 
 
     private int reimbId;
     private double amount;
-    private String submittedTime;
-    private String resolveTime;
+    private Timestamp submittedTime;
+    private Timestamp resolveTime;
     private String description;
     private byte receipt;
     private int paymentId;
@@ -14,8 +15,8 @@ public class Reimbursment {
     private String resolverName;
     private int authorId; //creator of the reimbursment
     private int  resolveId; // the id of the person who reimburs
-    private int statusId; // status of the reimbursements, pending, approved, denied
-    private int typeId; // type of reimbursements food, travel, lodging, other
+    private ReimbursmentStatuses statusId; // status of the reimbursements, pending, approved, denied
+    private ReimbursmentTypes typeId; // type of reimbursements food, travel, lodging, other
 
 
     public Reimbursment(){
@@ -27,20 +28,16 @@ public class Reimbursment {
         this.authorId = authorId;
     }
 
-    public Reimbursment(int reimId, double amount, String submittedTime, String resolveTime, String description, int authorId, int resolvedId, int statusId, int typeId){
+    public Reimbursment(int reimId, double amount, String description){
 
         this.reimbId = reimId;
         this.amount = amount;
-        this.submittedTime = submittedTime;
-        this.resolveTime = resolveTime;
         this.description = description;
-        this.authorId = authorId;
-        this.resolveId = resolvedId;
-        this.statusId = statusId;
-        this.typeId = typeId;
+
+
     }
 
-    public Reimbursment(int reimId, double amount, String submittedTime, String resolveTime, String description, String authorName, String resolverName, int statusId, int typeId){
+    public Reimbursment(int reimId, double amount, String description, String authorName){
 
         this.reimbId = reimId;
         this.amount = amount;
@@ -71,19 +68,19 @@ public class Reimbursment {
         this.amount = amount;
     }
 // subTime getter and setter
-    public String getSubmittedTime() {
+    public Timestamp getSubmittedTime() {
         return submittedTime;
     }
 
-    public void setSubmittedTime(String submittedTime) {
+    public void setSubmittedTime(Timestamp submittedTime) {
         this.submittedTime = submittedTime;
     }
 // resTime getter and setter
-    public String getResolveTime() {
+    public Timestamp getResolveTime() {
         return resolveTime;
     }
 
-    public void setResolveTime(String resolveTime) {
+    public void setResolveTime(Timestamp resolveTime) {
         this.resolveTime = resolveTime;
     }
 // description getter and setter
@@ -127,19 +124,19 @@ public class Reimbursment {
         this.resolveId = resolveId;
     }
 //Status getter and setter
-    public int getStatusId() {
+    public ReimbursmentStatuses getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(int statusId) {
+    public void setStatusId(ReimbursmentStatuses statusId) {
         this.statusId = statusId;
     }
 //TypeID getter and setter
-    public int getTypeId() {
+    public ReimbursmentTypes getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId) {
+    public void setTypeId(ReimbursmentTypes typeId) {
         this.typeId = typeId;
     }
 

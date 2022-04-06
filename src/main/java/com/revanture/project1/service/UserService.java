@@ -110,4 +110,7 @@ public class UserService {
 
         return 0;
     }
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
 }
